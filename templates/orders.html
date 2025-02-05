@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Management - WhatsApp Bot Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f6fa;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .orders-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-processing { background: #81ecec; color: #00cec9; }
+        .status-dhl_warehouse { background: #74b9ff; color: #0984e3; }
+        .status-in_transit { background: #a29bfe; color: #6c5ce7; }
+        .status-buffalo_warehouse { background: #ffeaa7; color: #fdcb6e; }
+        .status-delivered { background: #55efc4; color: #00b894; }
+
+        .table-responsive {
+            margin-top: 1rem;
+        }
+
+        .table th {
+            white-space: nowrap;
+            background: #f8f9fa;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .csv-upload {
+            display: none;
+        }
+
+        #orderModal .modal-dialog {
+            max-width: 700px;
+        }
+
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tooltip-inner {
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Order Management</h1>
+            <div class="nav-links">
+                <a href="/" class="btn btn-primary"><i class="bi bi-house-door"></i> Dashboard</a>
+                <a href="/logout" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            </div>
+        </div>
+
+        <div class="orders-section">
+            <div class="orders-header">
+                <h2>Orders</h2>
+                <div class="btn-group">
+                    <button class="btn btn-success" onclick="openAddOrderModal()">
+                        <i class="bi bi-plus-circle"></i> Add Order
+                    </button>
+                    <button class="btn btn-primary" onclick="downloadCSV()">
+                        <i class="bi bi-download"></i> Export CSV
+                    </button>
+                    <button class="btn btn-info" onclick="document.getElementById('csvUpload').click()">
+                        <i class="bi bi-upload"></i> Import CSV
+                    </button>
+                    <input type="file" id="csvUpload" class="csv-upload" accept=".csv" onchange="handleCSVUpload(this)">
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-item">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search orders...">
+                </div>
+                <div class="filter-item">
+                    <select class="form-select" id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="processing">Processing</option>
+                        <option value="dhl_warehouse">DHL Warehouse</option>
+                        <option value="in_transit">In Transit</option>
+                        <option value="buffalo_warehouse">Buffalo Warehouse</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <select class="form-select" id="dateFilter">
+                        <option value="">All Dates</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Customer Number</th>
+                        <th>Status</th>
+                        <th>Current Location</th>
+                        <th>Order Number</th>
+                        <th>Est. Delivery</th>
+                        <th>Item Details</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Order Modal -->
+    <div class="modal fade" id="orderModal" tabindex="-1">
+        <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add New Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="orderForm" class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="customerName" name="customerName" required>
+                                    <label for="customerName">Customer Name</label>
+                                    <div class="invalid-feedback">Please enter customer name</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="customerNumber" name="customerNumber" required 
+                                           pattern="^[+]?[0-9]{10,15}$">
+                                    <label for="customerNumber">Customer Number</label>
+                                    <div class="invalid-feedback">Please enter a valid phone number</div>
+                                </div>
+                            </div>
+                </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="status" name="status" required>
+                                        <option value="">Select Status</option>
+                        <option value="processing">Processing</option>
+                                        <option value="dhl_warehouse">DHL Warehouse</option>
+                                        <option value="in_transit">In Transit</option>
+                                        <option value="buffalo_warehouse">Buffalo Warehouse</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+                                    <label for="status">Status</label>
+                                    <div class="invalid-feedback">Please select a status</div>
+                                </div>
+                </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="currentLocation" name="currentLocation" required>
+                    <label for="currentLocation">Current Location</label>
+                                    <div class="invalid-feedback">Please enter current location</div>
+                                </div>
+                            </div>
+                </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="trackingNumber" name="trackingNumber" required>
+                    <label for="trackingNumber">Order Number</label>
+                                    <div class="invalid-feedback">Please enter order number</div>
+                                </div>
+                </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="estimatedDelivery" name="estimatedDelivery" required>
+                    <label for="estimatedDelivery">Estimated Delivery</label>
+                                    <div class="invalid-feedback">Please select estimated delivery date</div>
+                                </div>
+                            </div>
+                </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="details" name="details" style="height: 100px" required></textarea>
+                    <label for="details">Details</label>
+                            <div class="invalid-feedback">Please enter order details</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveOrder()">Save Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script>
+        let currentEditId = null;
+        let orderModal;
+        let orders = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+            loadOrders();
+            setupFilters();
+
+            // Enable Bootstrap tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+
+        function setupFilters() {
+            document.getElementById('searchInput').addEventListener('input', filterOrders);
+            document.getElementById('statusFilter').addEventListener('change', filterOrders);
+            document.getElementById('dateFilter').addEventListener('change', filterOrders);
+        }
+
+        function filterOrders() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            const filteredOrders = orders.filter(order => {
+                const matchesSearch = Object.values(order).some(value => 
+                    String(value).toLowerCase().includes(searchTerm)
+                );
+
+                const matchesStatus = !statusFilter || order.status === statusFilter;
+
+                let matchesDate = true;
+                if (dateFilter) {
+                    const orderDate = moment(order.createdAt);
+                    const now = moment();
+                    switch(dateFilter) {
+                        case 'today':
+                            matchesDate = orderDate.isSame(now, 'day');
+                            break;
+                        case 'week':
+                            matchesDate = orderDate.isSame(now, 'week');
+                            break;
+                        case 'month':
+                            matchesDate = orderDate.isSame(now, 'month');
+                            break;
+                    }
+                }
+
+                return matchesSearch && matchesStatus && matchesDate;
+            });
+
+            displayOrders(filteredOrders);
+        }
+
+        function showLoading() {
+            document.querySelector('.loading-overlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.querySelector('.loading-overlay').style.display = 'none';
+        }
+
+        async function loadOrders() {
+            showLoading();
+            try {
+                const response = await fetch('/api/orders');
+                orders = await response.json();
+                displayOrders(orders);
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                alert('Failed to load orders. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function displayOrders(ordersToDisplay) {
+                    const tbody = document.getElementById('ordersTableBody');
+                    tbody.innerHTML = '';
+            
+            ordersToDisplay.forEach(order => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${order.customerName || 'Not specified'}</td>
+                            <td>${order.customerNumber}</td>
+                    <td><span class="status-badge status-${order.status.toLowerCase()}">${formatStatus(order.status)}</span></td>
+                            <td>${order.currentLocation || '-'}</td>
+                            <td>${order.trackingNumber || '-'}</td>
+                    <td>${formatDate(order.estimatedDelivery)}</td>
+                    <td>
+                        <span class="text-truncate d-inline-block" style="max-width: 200px;" 
+                              data-bs-toggle="tooltip" title="${order.details || '-'}">
+                            ${order.details || '-'}
+                        </span>
+                    </td>
+                            <td>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-primary" onclick="editOrder('${order.id}')" 
+                                    data-bs-toggle="tooltip" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteOrder('${order.id}')"
+                                    data-bs-toggle="tooltip" title="Delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+
+            // Reinitialize tooltips
+            const tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltips.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        }
+
+        function formatStatus(status) {
+            return status.split('_').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            return moment(dateString).format('MMM D, YYYY');
+        }
+
+        function openAddOrderModal() {
+            currentEditId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Order';
+            document.getElementById('orderForm').reset();
+            orderModal.show();
+        }
+
+        async function editOrder(orderId) {
+            showLoading();
+            try {
+                const response = await fetch(`/api/orders/${orderId}`);
+                const order = await response.json();
+                
+            currentEditId = orderId;
+            document.getElementById('modalTitle').textContent = 'Edit Order';
+                document.getElementById('customerName').value = order.customerName || '';
+                    document.getElementById('customerNumber').value = order.customerNumber;
+                    document.getElementById('status').value = order.status;
+                    document.getElementById('currentLocation').value = order.currentLocation || '';
+                    document.getElementById('trackingNumber').value = order.trackingNumber || '';
+                    document.getElementById('estimatedDelivery').value = order.estimatedDelivery || '';
+                    document.getElementById('details').value = order.details || '';
+                
+                orderModal.show();
+            } catch (error) {
+                console.error('Error loading order details:', error);
+                alert('Failed to load order details. Please try again.');
+            } finally {
+                hideLoading();
+        }
+        }
+
+        async function saveOrder() {
+            const form = document.getElementById('orderForm');
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
+            }
+
+            showLoading();
+            try {
+            const orderData = {
+                customerName: document.getElementById('customerName').value,
+                customerNumber: document.getElementById('customerNumber').value,
+                status: document.getElementById('status').value,
+                currentLocation: document.getElementById('currentLocation').value,
+                trackingNumber: document.getElementById('trackingNumber').value,
+                estimatedDelivery: document.getElementById('estimatedDelivery').value,
+                details: document.getElementById('details').value
+            };
+
+            const method = currentEditId ? 'PUT' : 'POST';
+            const url = currentEditId ? `/api/orders/${currentEditId}` : '/api/orders';
+
+                const response = await fetch(url, {
+                method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+                });
+
+                if (!response.ok) throw new Error('Failed to save order');
+
+                orderModal.hide();
+                await loadOrders();
+            } catch (error) {
+                console.error('Error saving order:', error);
+                alert('Failed to save order. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function deleteOrder(orderId) {
+            if (!confirm('Are you sure you want to delete this order?')) return;
+
+            showLoading();
+            try {
+                const response = await fetch(`/api/orders/${orderId}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error('Failed to delete order');
+                await loadOrders();
+            } catch (error) {
+                console.error('Error deleting order:', error);
+                alert('Failed to delete order. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function downloadCSV() {
+            const headers = ['Customer Name', 'Customer Number', 'Status', 'Current Location', 
+                           'Order Number', 'Estimated Delivery', 'Details'];
+            
+            const csvContent = [
+                headers.join(','),
+                ...orders.map(order => [
+                    order.customerName || '',
+                    order.customerNumber,
+                    order.status,
+                    order.currentLocation || '',
+                    order.trackingNumber || '',
+                    order.estimatedDelivery || '',
+                    (order.details || '').replace(/,/g, ';') // Replace commas with semicolons in details
+                ].map(field => `"${field}"`).join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `orders_${moment().format('YYYY-MM-DD')}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        async function handleCSVUpload(input) {
+            if (!input.files.length) return;
+
+            showLoading();
+            try {
+                const file = input.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch('/api/orders/import/csv', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Update orders directly with the returned data
+                    orders = result.orders;
+                    displayOrders(orders);
+                    alert(result.message);
+                } else {
+                    throw new Error(result.message || 'Import failed');
+                }
+            } catch (error) {
+                console.error('Error importing CSV:', error);
+                alert(error.message || 'Failed to import CSV. Please check the file format and try again.');
+            } finally {
+                hideLoading();
+                input.value = ''; // Reset file input
+            }
+        }
+    </script>
+</body>
+</html> 

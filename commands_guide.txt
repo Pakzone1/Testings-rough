@@ -1,0 +1,62 @@
+=== Commands from Bot Number ===
+!!ai-assist
+Description: Enable AI assistance for a specific number
+Example: !!ai-assist
+Note: Must be sent from bot number to the user chat that needs AI enabled
+
+!!no-assist  
+Description: Disable AI assistance for a specific number
+Example: !!no-assist
+Note: Must be sent from bot number to the user chat that needs AI disabled
+
+=== Commands from Admin/Moderator Number ===
+!!start
+Description: Start or resume the bot's operation
+Example: !!start
+Note: Use this if the bot has been paused
+
+!!pause
+Description: Temporarily pause the bot
+Example: !!pause
+Note: Bot will stop responding to messages until started again
+
+!!set-key
+Description: Update the AI assistant key for the bot
+Example: !!set-key "your_new_assistant_key"
+Note: Replace 'your_new_assistant_key' with the actual assistant key
+
+!!add-mod
+Description: Add a new moderator to help manage the bot
+Example: !!add-mod "923001234567"
+Note: The number should be in international format without '+' or spaces
+
+!!remove-mod
+Description: Remove an existing moderator
+Example: !!remove-mod "923001234567"
+Note: The moderator will lose all moderator privileges
+
+!!list-mods
+Description: Display a list of all current moderators
+Example: !!list-mods
+Note: Shows all phone numbers that have moderator access
+
+!!clear-threads
+Description: Clear all conversation threads (reset all ongoing conversations)
+Example: !!clear-threads
+Note: Use this if conversations seem stuck or need a fresh start
+
+!!respond
+Description: Send a direct message to a specific user
+Example: !!respond "923001234567" "Hello, how can I help you today?"
+Note: Useful for responding to customer queries manually
+
+=== Commands from Any Number ===
+!!show-menu
+Description: Display the available commands menu
+Example: !!show-menu
+Note: Shows commands based on your access level
+
+!!help or !!commands
+Description: Show available commands and their descriptions
+Example: !!help
+Note: Alternative way to see available commands
