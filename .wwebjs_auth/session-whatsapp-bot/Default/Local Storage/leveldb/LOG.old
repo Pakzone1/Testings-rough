@@ -1,5 +1,0 @@
-2025/02/05-18:05:35.155 93c3 Creating DB /root/wa-bot/Testings-rough/.wwebjs_auth/session-whatsapp-bot/Default/Local Storage/leveldb since it was missing.
-2025/02/05-18:05:35.167 93c3 Reusing MANIFEST /root/wa-bot/Testings-rough/.wwebjs_auth/session-whatsapp-bot/Default/Local Storage/leveldb/MANIFEST-000001
-2025/02/05-19:55:46.986 b240 Level-0 table #5: started
-2025/02/05-19:55:46.990 b240 Level-0 table #5: 18824 bytes OK
-2025/02/05-19:55:46.991 b240 Delete type=0 #3
