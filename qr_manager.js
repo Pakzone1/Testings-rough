@@ -92,7 +92,7 @@ async function generateQRCode(phoneNumber) {
         const linkResponse = await axios.post(
             `${DUB_API_BASE}/links`,
             {
-                url: 'https://play.google.com/store/apps/details?id=com.ftcrider.riderapp',
+                url: 'https://ftcrider.com/',
                 domain: 'ftcrider.link',
                 key: linkName, // This will be the short URL slug
                 name: `FTC Rider App - ${phoneNumber}`,
