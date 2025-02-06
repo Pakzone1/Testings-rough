@@ -243,8 +243,8 @@ async function handleGetQRStats(phone_number) {
 
         const response = `📊 *Your QR Code Statistics*\n\n` +
             `Created: ${createdDate.toLocaleString()}\n` +
-            `Total Scans: ${stats.total_scans}\n\n` ;
-            // `*Your Short URL:* ${qrCode.short_url}`;
+            `Total Scans: ${stats.total_scans}\n\n`;
+        // `*Your Short URL:* ${qrCode.short_url}`;
 
         return response;
     } catch (error) {
@@ -547,8 +547,8 @@ async function handleCommand(client, assistantOrOpenAI, message, senderNumber, i
 
                     let response = `📊 *Your QR Code Statistics*\n\n` +
                         `Created: ${createdDate.toLocaleString()}\n` +
-                        `Total Scans: ${stats.total_scans}\n\n` ;
-                        // `*Your Short URL:* ${qrCode.short_url}`;
+                        `Total Scans: ${stats.total_scans}\n\n`;
+                    // `*Your Short URL:* ${qrCode.short_url}`;
 
                     if (stats.error) {
                         response += `\n\nNote: ${stats.error}`;
@@ -574,6 +574,13 @@ async function processImageOrDocument(assistantOrOpenAI, media, text) {
 }
 
 async function storeUserMessage(client, assistantOrOpenAI, senderNumber, message) {
+    // Check if message is from a group chat
+    const chat = await message.getChat();
+    if (chat.isGroup) {
+        console.log(`Ignoring message from group chat: ${chat.name}`);
+        return null;
+    }
+
     // Filter out status broadcasts and bot's own messages
     if (senderNumber === client.info.wid.user ||
         isIgnored(senderNumber) ||
@@ -677,6 +684,12 @@ async function processMessageQueue(client, assistantOrOpenAI, senderNumber) {
 }
 
 async function processUserMessages(client, assistantOrOpenAI, senderNumber, message) {
+    // Check if message is from a group chat by checking the sender number format
+    if (senderNumber.includes('@g.us')) {
+        console.log(`Ignoring message from group chat: ${senderNumber}`);
+        return null;
+    }
+
     // Filter out invalid senders
     if (senderNumber === 'status' ||
         senderNumber === 'status@broadcast' ||

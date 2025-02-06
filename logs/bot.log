@@ -1032,3 +1032,76 @@
 {"level":"info","message":"[WhatsApp] Processing message from: 33769244512@c.us","timestamp":"2025-02-05 22:32:58"}
 {"level":"info","message":"[WhatsApp] Processing message from: 447538425099@c.us","timestamp":"2025-02-05 22:33:17"}
 {"level":"info","message":"[Thread] Checking thread for user 447538425099: thread_IyitWq2311oTOy0KHYzvXkDW","timestamp":"2025-02-05 22:33:17"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:03:29"}
+{"level":"info","message":"[Startup] Bot initialization started","timestamp":"2025-02-06 17:03:29"}
+{"level":"info","message":"[WhatsApp] QR Code received","timestamp":"2025-02-06 17:03:43"}
+{"level":"info","message":"[WhatsApp] QR code generated successfully","timestamp":"2025-02-06 17:03:43"}
+{"level":"info","message":"[WhatsApp] Loading: 100% WhatsApp","timestamp":"2025-02-06 17:03:52"}
+{"level":"info","message":"[WhatsApp] Client authenticated","timestamp":"2025-02-06 17:03:56"}
+{"level":"info","message":"[Startup] WhatsApp client is ready!","timestamp":"2025-02-06 17:03:58"}
+{"level":"info","message":"[WhatsApp] Processing message from: 923552661032@c.us","timestamp":"2025-02-06 17:03:59"}
+{"level":"info","message":"[WhatsApp] Processing message from: 923499490427@c.us","timestamp":"2025-02-06 17:04:35"}
+{"level":"error","message":"Error loading assistant config:: Error: 401 Incorrect API key provided: sk-proj-********************************************************************************************************************************************************_kkA. You can find your API key at https://platform.openai.com/account/api-keys.\n    at APIError.generate (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\node_modules\\openai\\error.js:48:20)\n    at OpenAI.makeStatusError (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\node_modules\\openai\\core.js:293:33)\n    at OpenAI.makeRequest (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\node_modules\\openai\\core.js:337:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async ThreadManager.loadAssistantConfig (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\thread_manager.js:387:38)\n    at async ThreadManager.ensureValidThread (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\thread_manager.js:504:13)\n    at async generateResponseOpenAI (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:263:26)\n    at async processUserMessages (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:725:26)\n    at async processMessageQueue (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:675:13)\n    at async queueMessage (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:661:9)\n    at async Object.storeUserMessage (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:620:9)\n    at async processMessage (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\index.js:172:30)\n    at async Client.<anonymous> (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\index.js:186:5)","timestamp":"2025-02-06 17:04:36"}
+{"level":"info","message":"[Thread] Checking thread for user 923499490427: thread_bMrfLeTbyC7jbco2DUuEGoyc","timestamp":"2025-02-06 17:04:36"}
+{"level":"error","message":"Error verifying thread:: Error: 401 Incorrect API key provided: sk-proj-********************************************************************************************************************************************************_kkA. You can find your API key at https://platform.openai.com/account/api-keys.\n    at APIError.generate (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\node_modules\\openai\\error.js:48:20)\n    at OpenAI.makeStatusError (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\node_modules\\openai\\core.js:293:33)\n    at OpenAI.makeRequest (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\node_modules\\openai\\core.js:337:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async ThreadManager.ensureValidThread (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\thread_manager.js:526:17)\n    at async generateResponseOpenAI (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:263:26)\n    at async processUserMessages (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:725:26)\n    at async processMessageQueue (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:675:13)\n    at async queueMessage (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:661:9)\n    at async Object.storeUserMessage (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\functions.js:620:9)\n    at async processMessage (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\index.js:172:30)\n    at async Client.<anonymous> (D:\\Study\\Websites\\Fiverr\\prototype depoyment\\Testings-rough\\index.js:186:5)","timestamp":"2025-02-06 17:04:36"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:06:09"}
+{"level":"info","message":"[Startup] Bot initialization started","timestamp":"2025-02-06 17:06:09"}
+{"level":"info","message":"[WhatsApp] Client authenticated","timestamp":"2025-02-06 17:06:19"}
+{"level":"info","message":"[Startup] WhatsApp client is ready!","timestamp":"2025-02-06 17:06:21"}
+{"level":"info","message":"[WhatsApp] Processing message from: 923552661032@c.us","timestamp":"2025-02-06 17:06:22"}
+{"level":"info","message":"[WhatsApp] Processing message from: 923499490427@c.us","timestamp":"2025-02-06 17:06:30"}
+{"level":"info","message":"[Thread] Assistant configuration changed, updating threads...","timestamp":"2025-02-06 17:06:31"}
+{"level":"info","message":"[Thread] Marked existing threads for update on next interaction","timestamp":"2025-02-06 17:06:31"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:06:31"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:06:31"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:06:31"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:06:31"}
+{"level":"info","message":"[Thread] Thread thread_bMrfLeTbyC7jbco2DUuEGoyc already deleted or not found","timestamp":"2025-02-06 17:06:32"}
+{"level":"info","message":"[Thread] Thread thread_VpBydf9gz8VOVJJ0rGlKp2jV already deleted or not found","timestamp":"2025-02-06 17:06:32"}
+{"level":"info","message":"[Thread] Thread thread_aTlhtJTdl2R7onBuAJvnIHJ4 already deleted or not found","timestamp":"2025-02-06 17:06:33"}
+{"level":"info","message":"[Thread] Thread thread_24RjbZcKmkIlM1gfAx0OM9tH already deleted or not found","timestamp":"2025-02-06 17:06:33"}
+{"level":"info","message":"[Thread] Thread thread_zqj7VNEuBAor289ex4nIns7x already deleted or not found","timestamp":"2025-02-06 17:06:34"}
+{"level":"info","message":"[Thread] Thread thread_IyitWq2311oTOy0KHYzvXkDW already deleted or not found","timestamp":"2025-02-06 17:06:34"}
+{"level":"info","message":"[Thread] Thread thread_UcQZSgyLakipqK2Gotweg51k already deleted or not found","timestamp":"2025-02-06 17:06:34"}
+{"level":"info","message":"[Thread] Thread thread_RBaFnOGmBedkjyDQFR7VYa6X already deleted or not found","timestamp":"2025-02-06 17:06:35"}
+{"level":"info","message":"[Thread] Thread thread_rgcS0mNIXNFeQtjdxkA1lWXz already deleted or not found","timestamp":"2025-02-06 17:06:35"}
+{"level":"info","message":"[Thread] Thread thread_g7r88MRvLkjBlIIyJiHnikSV already deleted or not found","timestamp":"2025-02-06 17:06:35"}
+{"level":"info","message":"[Thread] Thread thread_WmdJgAuiStxeuXTLowmm9czx already deleted or not found","timestamp":"2025-02-06 17:06:36"}
+{"level":"info","message":"[Thread] Thread thread_ntVBTQ3vaFprfb80dj5xfAS4 already deleted or not found","timestamp":"2025-02-06 17:06:36"}
+{"level":"info","message":"[Thread] Thread thread_a3sH38wJTJxXz5b9yXzTC6Zi already deleted or not found","timestamp":"2025-02-06 17:06:36"}
+{"level":"info","message":"[Thread] Thread thread_XKJSocbZzwz3HPfGtX2XHueq already deleted or not found","timestamp":"2025-02-06 17:06:37"}
+{"level":"info","message":"[Thread] Thread thread_96RD12gsefLNTvDckQ5NFaHr already deleted or not found","timestamp":"2025-02-06 17:06:37"}
+{"level":"info","message":"[Thread] Thread thread_smqXZUDkxexKgUkFkMgLVMJM already deleted or not found","timestamp":"2025-02-06 17:06:39"}
+{"level":"info","message":"[Thread] Thread thread_70CEFmD4jLiFdzrONcVPJ70l already deleted or not found","timestamp":"2025-02-06 17:06:39"}
+{"level":"info","message":"[Thread] Thread thread_sEMeTHzagTFXMaH0cCyYh8sM already deleted or not found","timestamp":"2025-02-06 17:06:40"}
+{"level":"info","message":"[Thread] Thread thread_9PLe8tLWRRwEfvM7fULep4ND already deleted or not found","timestamp":"2025-02-06 17:06:40"}
+{"level":"info","message":"[Thread] Thread thread_0s01Ljf8eQaiEFOeSxum5X14 already deleted or not found","timestamp":"2025-02-06 17:06:41"}
+{"level":"info","message":"[Thread] Thread thread_otfJuG4d1j2oV4LTDgkws8P5 already deleted or not found","timestamp":"2025-02-06 17:06:41"}
+{"level":"info","message":"[Thread] Thread thread_ZW8a2s9DPC7oWt7G6J9WWp31 already deleted or not found","timestamp":"2025-02-06 17:06:42"}
+{"level":"info","message":"[Thread] Thread thread_RBNxzirN9MbE6bflRu8eorqB already deleted or not found","timestamp":"2025-02-06 17:06:42"}
+{"level":"info","message":"[Thread] Thread thread_5KUFv1b9tWQ4MEjilGC9Yw4r already deleted or not found","timestamp":"2025-02-06 17:06:42"}
+{"level":"info","message":"[Thread] Thread thread_umY4tVcdhEu2I6ipuoCDmewT already deleted or not found","timestamp":"2025-02-06 17:06:43"}
+{"level":"info","message":"[Thread] Thread thread_0ldtWkfUZ0hmI2zHHnLhtCLW already deleted or not found","timestamp":"2025-02-06 17:06:43"}
+{"level":"info","message":"[Thread] Checking thread for user 923499490427: thread_bMrfLeTbyC7jbco2DUuEGoyc","timestamp":"2025-02-06 17:06:43"}
+{"level":"info","message":"[Thread] Thread thread_bMrfLeTbyC7jbco2DUuEGoyc not found, creating new one","timestamp":"2025-02-06 17:06:44"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:06:44"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:06:44"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:06:44"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:06:44"}
+{"level":"info","message":"[WhatsApp] Processing message from: 923552661032@c.us","timestamp":"2025-02-06 17:06:57"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:07:01"}
+{"level":"info","message":"[Thread] Loaded 0 threads","timestamp":"2025-02-06 17:07:01"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:07:01"}
+{"level":"info","message":"[Thread] Loaded 0 threads","timestamp":"2025-02-06 17:07:01"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:07:01"}
+{"level":"info","message":"[Thread] Loaded 0 threads","timestamp":"2025-02-06 17:07:01"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:07:05"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:07:05"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:07:05"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:07:05"}
+{"level":"info","message":"[Thread] Threads file changed, reloading...","timestamp":"2025-02-06 17:07:05"}
+{"level":"info","message":"[Thread] Loaded 26 threads","timestamp":"2025-02-06 17:07:05"}
+{"level":"info","message":"[WhatsApp] Processing message from: 120363397911473346@g.us","timestamp":"2025-02-06 17:07:56"}
+{"level":"info","message":"[WhatsApp] Processing message from: 923552661032@c.us","timestamp":"2025-02-06 17:08:11"}
+{"level":"info","message":"[WhatsApp] Processing message from: 120363397911473346@g.us","timestamp":"2025-02-06 17:08:31"}
+{"level":"info","message":"[WhatsApp] Processing message from: 923552661032@c.us","timestamp":"2025-02-06 17:08:31"}
